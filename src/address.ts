@@ -1,4 +1,4 @@
-export const PRIVATE_KEY = "";
-export const PUBLIC_KEY = "";
+export const PRIVATE_KEY = "5KGceZJCJAC4VNMiu22nvy5fpnQE1WEu8V2akAoVQYunCVw1WrCgdE2vyKnZxXkG3WUnEUrXRWz7Vo1K1VzDDRxL";
+export const PUBLIC_KEY = "9fJdwwrU8VfJf32RYWREFAytKHGVRk8URkHxcoVdbF5z";
 
-export const TOKEN_MINT_ADDRESS = "";
+export const TOKEN_MINT_ADDRESS = "7H5Fuko9kV2zLh1mjXZmqsJdACdAn3GfP66MZxuHZifT";
