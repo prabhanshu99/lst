@@ -32,42 +32,42 @@ export const mintTokens = async (fromAddress: string, toAddress: string, amount:
     );
 }
 
-// export const burnTokens = async (fromAddress: string, toAddress: string, amount: number) => {
-//     console.log("Burning tokens");
-//     if (!PRIVATE_KEY || !TOKEN_MINT_ADDRESS) {
-//         throw new Error("Missing PRIVATE_KEY or TOKEN_MINT_ADDRESS");
-//     }
+export const burnTokens = async (fromAddress: string, toAddress: string, amount: number) => {
+    console.log("Burning tokens");
+    if (!PRIVATE_KEY || !TOKEN_MINT_ADDRESS) {
+        throw new Error("Missing PRIVATE_KEY or TOKEN_MINT_ADDRESS");
+    }
 
-//     const keypair = Keypair.fromSecretKey(bs58.decode(PRIVATE_KEY));
-//     const mint = new PublicKey(TOKEN_MINT_ADDRESS);
-//     const account = new PublicKey(fromAddress);
+    const keypair = Keypair.fromSecretKey(bs58.decode(PRIVATE_KEY));
+    const mint = new PublicKey(TOKEN_MINT_ADDRESS);
 
-//     const ata = await getAssociatedTokenAddress(mint, account);
+    // We burn from the SERVER's ATA (where the user sent the tokens)
+    const ata = await getAssociatedTokenAddress(mint, keypair.publicKey);
 
-//     await burn(
-//         connection,
-//         keypair,
-//         ata,
-//         mint,
-//         keypair,
-//         amount
-//     );
-// }
+    await burn(
+        connection,
+        keypair,
+        ata,
+        mint,
+        keypair,
+        amount
+    );
+}
 
-// export const sendNativeTokens = async (fromAddress: string, toAddress: string, amount: number) => {
-//     console.log("Sending native tokens");
-//     if (!PRIVATE_KEY) {
-//         throw new Error("Missing PRIVATE_KEY");
-//     }
+export const sendNativeTokens = async (fromAddress: string, toAddress: string, amount: number) => {
+    console.log("Sending native tokens");
+    if (!PRIVATE_KEY) {
+        throw new Error("Missing PRIVATE_KEY");
+    }
 
-//     const keypair = Keypair.fromSecretKey(bs58.decode(PRIVATE_KEY));
-//     const transferTransaction = new Transaction().add(
-//         SystemProgram.transfer({
-//             fromPubkey: keypair.publicKey,
-//             toPubkey: new PublicKey(toAddress),
-//             lamports: amount,
-//         })
-//     );
+    const keypair = Keypair.fromSecretKey(bs58.decode(PRIVATE_KEY));
+    const transferTransaction = new Transaction().add(
+        SystemProgram.transfer({
+            fromPubkey: keypair.publicKey,
+            toPubkey: new PublicKey(toAddress), // Sending to the user
+            lamports: amount,
+        })
+    );
 
-//     await sendAndConfirmTransaction(connection, transferTransaction, [keypair]);
-// }
+    await sendAndConfirmTransaction(connection, transferTransaction, [keypair]);
+}
