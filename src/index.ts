@@ -4,7 +4,6 @@ import { burnTokens, mintTokens, sendNativeTokens } from './mintTokens';
 
 const app = express();
 
-
 app.post('/helius', async(req, res) => {
     const fromAddress = req.body.fromAddress;
     const toAddress = req.body.toAddress;
